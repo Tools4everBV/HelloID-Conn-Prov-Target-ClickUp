@@ -92,16 +92,17 @@ The following settings are required to connect to the API.
 
 #### `team_id`
 
-The `team_id` is equal for all accounts _created in_ or _invited to_ _ClickUp_ and can be retrieved by making an API call to: https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/.
+The `team_id` is equal for all accounts _created in_ or _invited to_ _ClickUp_. 
 
-The API call to create _or_ invite accounts uses the `team_id` from the field mapping
+>[!TIP]
+> The value must be retrieved __before__ implementing this connector by making an API call to: https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/.
 
 #### `custom_role_id`
 
-The API call for inviting users to _ClickUp_ requires the `custom_role_id` property. This is a __mandatory__ property. As with the `team_id`, its value is equal for all accounts. The `custom_role_name` is _member_.
+The API call for inviting users to _ClickUp_ requires the `custom_role_id`. This is a __mandatory__ property. As with the `team_id`, its value is equal for all accounts. The `custom_role_name` is _member_.
 
 >[!TIP]
-The value of the `custom_role_id` property must be acquired by using the following PowerShell code.
+>The value must be retrieved __before__ implementing this connector by using the code specifed below.
 > ```powershell
 > # Script to find the id for a role with name 'member'.
 > # API call: https://clickup.com/api/clickupreference/operation/GetCustomRoles/
