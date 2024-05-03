@@ -46,22 +46,17 @@ try {
         throw 'The account reference could not be found'
     }
 
-    Write-Verbose 'Acquiring access_token'
-    $splatRetrieveTokenParams = @{
-        Uri         = "$($actionContext.Configuration.BaseUrl)/api/v2/oauth/token?client_id=$($actionContext.Configuration.ClientId)&client_secret=$($actionContext.Configuration.ClientSecret)&code=$($actionContext.Configuration.Code)"
-        Method      = 'POST'
-    }
-    $responseToken = Invoke-RestMethod @splatRetrieveTokenParams -Verbose:$false
-
-    # Set authorization header
+   # Set authorization header
     $splatParams = @{
         Headers = @{
-            Authorization = "$($responseToken.access_token)"
+            Authorization = "$($actionContext.Configuration.Personaltoken)"
+            "Content-Type"  = "application/json"
         }
     }
 
+
     Write-Verbose "Verifying if a ClickUp account for [$($personContext.Person.DisplayName)] exists"
-    $splatParams['Uri'] = "$($actionContext.Configuration.BaseUrl)/api/v2/$($actionContext.Data.teamId)/$($actionContext.AccountReference)"
+    $splatParams['Uri'] = "$($actionContext.Configuration.BaseUrl)/api/v2/$($actionContext.Data.teamId)/$($actionContext.References.Account)"
     $splatParams['Method'] = 'GET'
     $correlatedAccount = Invoke-RestMethod @splatParams -Verbose:$false
     if ($null -ne $correlatedAccount) {
@@ -82,9 +77,10 @@ try {
         switch ($action) {
             'DeleteAccount' {
                 Write-Verbose "Deleting ClickUp account with accountReference: [$($actionContext.References.Account)]"
-                $splatParams['Uri'] = "$actionContext.Configuration.BaseUrl/api/v2/$($actionContext.Data.teamId)/$($actionContext.AccountReference)"
+                $splatParams['Uri'] = "$actionContext.Configuration.BaseUrl/api/v2/team/$($actionContext.Data.teamId)/user/$($actionContext.References.Account)"
+                                                  
                 $splatParams['Method'] = 'DELETE'
-                $response = Invoke-RestMethod @splatParams
+                #YE uitlaten tot testen.#$response = Invoke-RestMethod @splatParams
                 if ($response.StatusCode -eq 200){
                     $outputContext.Success = $true
                     $outputContext.AuditLogs.Add([PSCustomObject]@{
