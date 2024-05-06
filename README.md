@@ -4,8 +4,6 @@
 > [!IMPORTANT]
 > This repository contains the connector and configuration code only. The implementer is responsible to acquire the connection details such as username, password, certificate, etc. You might even need to sign a contract or agreement with the supplier before implementing this connector. Please contact the client's application manager to coordinate the connector requirements.
 
-> [!WARNING]
-> This connector has not been tested on a _ClickUp_ environment. Therefore, changes will have to be made accordingly.
 
 <p align="center">
   <img src="./Logo.png">
@@ -50,11 +48,10 @@ The following lifecycle actions are available:
 Before implementing this connector, make sure the following requirements are met:
 
 - [ ] Access to the _ClickUp_ API.
-  - [ ] ClientID
-  - [ ] ClientSecret
-  - [ ] Code
+  - [ ] PersonalToken (generated for the admin account wihtin ClickUp)
+  - [ ] Base URL is always: 'https://api.clickup.com'
 - [ ] The `team_id` of the team for which the users will be invited. This value is needed in the field mapping.
-- [ ] The `custom_role_id` with name _member_. This value is needed in the field mapping.
+- [ ] The `role_id` with name _member_. This value is needed in the field mapping.
 
 ### Provisioning PowerShell V2 connector
 
@@ -75,24 +72,22 @@ The field mapping can be imported using the _fieldMapping.json_ file.
 
 The following settings are required to connect to the API.
 
-| Setting      | Description                        | Mandatory |
-| ------------ | ---------------------------------- | --------- |
-| ClienId      | The UserName to connect to the API | Yes       |
-| ClientSecret | The Password to connect to the API | Yes       |
-| Code         | Code used in the redirect_url      | Yes       |
-| BaseUrl      | The URL to the API                 | Yes       |
+| Setting       | Description                                  | Mandatory |
+| ------------- | -------------------------------------------- | --------- |
+| PersonalToken | PersonalToken to connect to the ClickUp API. | Yes       |
+| BaseUrl       | The URL to the API.                          | Yes       |
 
 ### Prerequisites
 
 - [ ] The _ClickUp_ API credentials.
 - [ ] Fixed value for `team_id`.
-- [ ] Fixed value for [`custom_role_id`.](#custom_role_id)
+- [ ] Fixed value for [`custom_role_id`.](#custom_role_id) (optional)
 
 ### Remarks
 
 #### `team_id`
 
-The `team_id` is equal for all accounts _created in_ or _invited to_ _ClickUp_. 
+The `team_id` is equal for all accounts _created in_ or _invited to_ _ClickUp_.
 
 >[!TIP]
 > The value must be retrieved __before__ implementing this connector by making an API call to: https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/.

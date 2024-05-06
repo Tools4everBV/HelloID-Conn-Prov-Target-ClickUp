@@ -34,7 +34,7 @@
       ]
     },
     {
-      "Name": "custom_role_id",
+      "Name": "role_id",
       "Description": "",
       "Type": "Text",
       "MappingActions": [

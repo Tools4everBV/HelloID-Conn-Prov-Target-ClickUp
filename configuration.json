@@ -1,43 +1,23 @@
 [
     {
-        "key": "ClientId",
-        "type": "input",
-        "defaultValue": "",
-        "templateOptions": {
-            "label": "ClientId",
-            "description": "The ClientId to connect to the API",
-            "required": true
-        }
+      "key": "PersonalToken",
+      "type": "input",
+      "defaultValue": "",
+      "templateOptions": {
+        "type": "password",
+        "label": "PersonalToken",
+        "description": "The PersonalToken to connect to the API",
+        "required": true
+      }
     },
     {
-        "key": "ClientSecret",
-        "type": "input",
-        "defaultValue": "",
-        "templateOptions": {
-            "type": "password",
-            "label": "ClientSecret",
-            "description": "The ClientSecret to connect to the API",
-            "required": true
-        }
-    },
-    {
-        "key": "Code",
-        "type": "input",
-        "defaultValue": "",
-        "templateOptions": {
-            "label": "Code",
-            "description": "The Code used in the redirect_url.",
-            "required": true
-        }
-    },
-    {
-        "key": "BaseUrl",
-        "type": "input",
-        "defaultValue": "",
-        "templateOptions": {
-            "label": "BaseUrl",
-            "description": "The URL to the API.",
-            "required": true
-        }
+      "key": "BaseUrl",
+      "type": "input",
+      "defaultValue": "",
+      "templateOptions": {
+        "label": "BaseUrl",
+        "description": "The URL to the API.",
+        "required": true
+      }
     }
-]
+  ]
