@@ -1,12 +1,12 @@
 [
     {
-      "key": "Personaltoken",
+      "key": "PersonalToken",
       "type": "input",
       "defaultValue": "",
       "templateOptions": {
         "type": "password",
-        "label": "Personaltoken",
-        "description": "The Personaltoken to connect to the API",
+        "label": "PersonalToken",
+        "description": "The PersonalToken to connect to the API",
         "required": true
       }
     },

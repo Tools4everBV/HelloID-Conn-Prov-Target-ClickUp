@@ -49,7 +49,7 @@ try {
    # Set authorization header
     $splatParams = @{
         Headers = @{
-            Authorization = "$($actionContext.Configuration.Personaltoken)"
+            Authorization = "$($actionContext.Configuration.PersonalToken)"
             "Content-Type"  = "application/json"
         }
     }
@@ -78,9 +78,7 @@ try {
             'DeleteAccount' {
                 Write-Verbose "Deleting ClickUp account with accountReference: [$($actionContext.References.Account)]"
                 $splatParams['Uri'] = "$actionContext.Configuration.BaseUrl/api/v2/team/$($actionContext.Data.teamId)/user/$($actionContext.References.Account)"
-                                                  
                 $splatParams['Method'] = 'DELETE'
-                #YE uitlaten tot testen.#$response = Invoke-RestMethod @splatParams
                 if ($response.StatusCode -eq 200){
                     $outputContext.Success = $true
                     $outputContext.AuditLogs.Add([PSCustomObject]@{

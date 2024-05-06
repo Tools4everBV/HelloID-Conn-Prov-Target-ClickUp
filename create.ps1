@@ -2,12 +2,11 @@
 # HelloID-Conn-Prov-Target-ClickUp-Create
 # PowerShell V2
 #################################################
-#$actionContext.DryRun = $false
+
 # Enable TLS1.2
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor [System.Net.SecurityProtocolType]::Tls12
 
 #region functions
-
 function Resolve-ClickUpError {
     [CmdletBinding()]
     param (
@@ -50,26 +49,21 @@ try {
         throw 'Mandatory attribute [Person.Accounts.MicrosoftActiveDirectory.mail] is empty. Please make sure it is correctly mapped'
     }
 
- # Set authorization header
+    # Verify if a user must be either [created and correlated] or just [correlated]
+    # First step is to retrieve all authenticated workspaces
     $splatParams = @{
+        Uri     = "$($actionContext.Configuration.BaseUrl)/api/v2/team"
+        Method  = 'GET'
         Headers = @{
-            Authorization = "$($actionContext.Configuration.Personaltoken)"
+            Authorization = "$($actionContext.Configuration.PersonalToken)"
             "Content-Type"  = "application/json"
         }
     }
-
-    # Verify if a user must be either [created and correlated] or just [correlated]
-    # First step is to retrieve all authenticated workspaces
-    $splatParams['Uri'] = "$($actionContext.Configuration.BaseUrl)/api/v2/team"
-    $splatParams['Method'] = 'GET'
     $authenticatedWorkspaces = Invoke-RestMethod @splatParams -Verbose:$false
-  $test =$authenticatedWorkspaces.teams | ConvertTo-Json
-   Write-Verbose -Verbose $test
-
 
     # Filter out the team where the team_id equals the team_id from the field mapping
     $team = $authenticatedWorkspaces.teams | Where-Object {$_.id -eq $($actionContext.Data.team_id)}
- 
+
     if ($null -eq $team) {
         throw "Workspace team with id: [$($actionContext.Data.team_id)] could not be found"
     }
@@ -101,13 +95,13 @@ try {
                     Uri     = "https://api.clickup.com/api/v2/team/$($actionContext.Data.team_id)/user"
                     Method  = 'POST'
                     Headers = @{
-                        "Authorization" = "$($actionContext.Configuration.Personaltoken)"
+                        "Authorization" = "$($actionContext.Configuration.PersonalToken)"
                         "Content-Type"  = "application/json"
                     }
                     Body    = @{
-                        email          = $($actionContext.Data.email)
-                        admin          = $($actionContext.Data.admin)
-                        role           = $($actionContext.Data.role_id)
+                        email = $($actionContext.Data.email)
+                        admin = $($actionContext.Data.admin)
+                        role  = $($actionContext.Data.role_id)
                     } | ConvertTo-Json
                 }
 

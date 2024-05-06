@@ -48,10 +48,10 @@ The following lifecycle actions are available:
 Before implementing this connector, make sure the following requirements are met:
 
 - [ ] Access to the _ClickUp_ API.
-  - [ ] PersonalKey (generated for the admin account)
-  - [ ] Base URL is always api.clickup.com
+  - [ ] PersonalToken (generated for the admin account wihtin ClickUp)
+  - [ ] Base URL is always: 'https://api.clickup.com'
 - [ ] The `team_id` of the team for which the users will be invited. This value is needed in the field mapping.
-- [ ] The `custom_role_id` with name _member_. This value is needed in the field mapping.
+- [ ] The `role_id` with name _member_. This value is needed in the field mapping.
 
 ### Provisioning PowerShell V2 connector
 
@@ -72,10 +72,10 @@ The field mapping can be imported using the _fieldMapping.json_ file.
 
 The following settings are required to connect to the API.
 
-| Setting      | Description                        | Mandatory |
-| ------------ | ---------------------------------- | --------- |
-| PersonalKey  | Personalkey to connect             | Yes       |
-| BaseUrl      | The URL to the API                 | Yes       |
+| Setting       | Description                                  | Mandatory |
+| ------------- | -------------------------------------------- | --------- |
+| PersonalToken | PersonalToken to connect to the ClickUp API. | Yes       |
+| BaseUrl       | The URL to the API.                          | Yes       |
 
 ### Prerequisites
 
@@ -87,7 +87,7 @@ The following settings are required to connect to the API.
 
 #### `team_id`
 
-The `team_id` is equal for all accounts _created in_ or _invited to_ _ClickUp_. 
+The `team_id` is equal for all accounts _created in_ or _invited to_ _ClickUp_.
 
 >[!TIP]
 > The value must be retrieved __before__ implementing this connector by making an API call to: https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/.
